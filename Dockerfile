@@ -3,6 +3,9 @@ LABEL AUTHOR="Java Home"
 RUN apk add openjdk17-jre
 WORKDIR /opt
 ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.74/bin/apache-tomcat-9.0.74.tar.gz .
-RUN tar -xzvf apache-tomcat-9.0.74.tar.gz
-CMD ["/opt/apache-tomcat-9.0.74/bin/catalina.sh", "run"]
-
+RUN tar xf apache-tomcat-9.0.74.tar.gz
+RUN rm -rf apache-tomcat-9.0.74.tar.gz
+RUN mv apache-tomcat-9.0.74 tomcat9
+COPY target/hr-api.war /opt/tomcat9/webapps
+EXPOSE 8081
+CMD ["/opt/tomcat9/bin/catalina.sh", "run"]
